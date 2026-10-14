@@ -8,7 +8,7 @@ interface GameDetailsProps {
   isFavorite: boolean;
   onTabChange: (tab: DetailTab) => void;
   onFavoriteToggle: () => void;
-  onDownload: () => void;
+  onDownload?: () => void;
   onMore: () => void;
 }
 
@@ -66,19 +66,21 @@ export function GameDetails({
         </div>
       </div>
 
-      <div className="details-actions">
-        <button className="play-button" type="button" onClick={onDownload}>
-          <Icon name="download" size={19} /> Download
-        </button>
-        <button
-          className="more-button"
-          type="button"
-          onClick={onMore}
-          aria-label="More game options"
-        >
-          ⋮
-        </button>
-      </div>
+      {onDownload && (
+        <div className="details-actions">
+          <button className="play-button" type="button" onClick={onDownload}>
+            <Icon name="download" size={19} /> Download
+          </button>
+          <button
+            className="more-button"
+            type="button"
+            onClick={onMore}
+            aria-label="More game options"
+          >
+            ⋮
+          </button>
+        </div>
+      )}
 
       <div className="detail-tabs" role="tablist" aria-label="Game information">
         {tabs.map((tab) => (

@@ -3,6 +3,8 @@ import { GameCard } from './GameCard'
 import { Icon } from './Icon'
 
 interface GameCollectionProps {
+  title: string
+  subtitle?: string
   games: Game[]
   selectedGameId: string
   sortOption: SortOption
@@ -14,6 +16,8 @@ interface GameCollectionProps {
 }
 
 export function GameCollection({
+  title,
+  subtitle,
   games,
   selectedGameId,
   sortOption,
@@ -26,7 +30,10 @@ export function GameCollection({
   return (
     <section className="collection" aria-labelledby="collection-title">
       <div className="collection-header">
-        <h1 id="collection-title">All PS4 Games <span>({games.length})</span></h1>
+        <div className="collection-heading">
+          <h1 id="collection-title">{title} <span>({games.length})</span></h1>
+          {subtitle && <p>{subtitle}</p>}
+        </div>
 
         <div className="collection-controls">
           <label className="sort-control">

@@ -1,4 +1,5 @@
 import type { Game } from '../types/game'
+import { NavLink } from 'react-router-dom'
 import { Icon } from './Icon'
 
 interface SidebarProps {
@@ -9,8 +10,8 @@ interface SidebarProps {
 }
 
 const navigation = [
-  { label: 'Games', icon: 'gamepad' as const, active: true },
-  { label: 'Library', icon: 'library' as const },
+  { label: 'Games', icon: 'gamepad' as const, path: '/games' },
+  { label: 'Library', icon: 'library' as const, path: '/library' },
   { label: 'Favorites', icon: 'heart' as const },
   { label: 'Downloads', icon: 'download' as const },
   { label: 'Settings', icon: 'settings' as const },
@@ -71,18 +72,30 @@ export function Sidebar({
       </div>
 
       <nav className="primary-nav" aria-label="Main navigation">
-        {navigation.map((item) => (
-          <button
-            className={item.active ? 'nav-item nav-item--active' : 'nav-item'}
-            type="button"
-            key={item.label}
-            aria-current={item.active ? 'page' : undefined}
-            onClick={() => !item.active && onUnavailable(item.label)}
-          >
-            <Icon name={item.icon} />
-            <span>{item.label}</span>
-          </button>
-        ))}
+        {navigation.map((item) =>
+          item.path ? (
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'nav-item nav-item--active' : 'nav-item'
+              }
+              to={item.path}
+              key={item.label}
+            >
+              <Icon name={item.icon} />
+              <span>{item.label}</span>
+            </NavLink>
+          ) : (
+            <button
+              className="nav-item"
+              type="button"
+              key={item.label}
+              onClick={() => onUnavailable(item.label)}
+            >
+              <Icon name={item.icon} />
+              <span>{item.label}</span>
+            </button>
+          ),
+        )}
       </nav>
 
       <div className="sidebar-divider" />
